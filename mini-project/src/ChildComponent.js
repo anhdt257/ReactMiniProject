@@ -23,7 +23,7 @@ function ChildComponent(props){
                 {!isMale&&
                 <p>Name:{name} - Age:{age} - Gender:Female</p>
                 }             
-
+            
                 {
                     colorList.length && 
                     <>
