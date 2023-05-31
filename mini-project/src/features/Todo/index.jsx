@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
 import './style.scss'
@@ -66,9 +66,6 @@ function TodoFeature(props) {
         setTodoList(newTodoList.filter(item=> item.id !==id))
         setFilteredList(newTodoList.filter(item=> item.id !==id))
     }
-    const handleUpdate = ()=>{
-        
-    }
     return (
         <div className='todoApp'>
             <h2>Todo List:</h2>
@@ -78,7 +75,7 @@ function TodoFeature(props) {
             </div>
             <>
                 {filterdList.map((item,idx)=>(
-                    <TodoItem key={item.id} idx={idx} todo={item} handleToggle={handleToggle} handleDelete={handleDelete} handleUpdate={handleUpdate}/>
+                    <TodoItem key={item.id} idx={idx} todo={item} handleToggle={handleToggle} handleDelete={handleDelete}/>
                 ))}
             </>
             <button onClick={handleFilterAll}>All</button>
