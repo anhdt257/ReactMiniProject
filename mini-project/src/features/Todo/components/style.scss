@@ -1,0 +1,16 @@
+.todoItem{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    p{
+        cursor: pointer;
+        width: 50px;
+    }
+    button{
+        height: 20px;
+    }
+    .disable{
+        color:#999;
+        text-decoration: line-through;
+    }
+}

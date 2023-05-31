@@ -1,9 +1,9 @@
 import './App.css';
-import ChildComponent from './ChildComponent.js'
+import TodoFeature from './features/Todo';
 function App() {
   return (
     <div className="App">
-      <ChildComponent num={1} color={"blue"}/>
+      <TodoFeature/>
     </div>
   );
 }
