@@ -20,6 +20,7 @@ class App extends React.Component {
       toggleShow: true,
     };
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleIncrease = this.handleIncrease.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +30,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("component did mount");
+    console.log("component did update");
     // Gọi sau khi component được cập nhật (re-render)
     // Kiểm tra sự thay đổi của props hoặc state trước đó và hiện tại
     // Thực hiện các công việc cần thiết dựa trên sự thay đổi này
@@ -45,13 +46,20 @@ class App extends React.Component {
       toggleShow: !this.state.toggleShow,
     });
   }
+  handleIncrease() {
+    this.setState((state) => ({
+      count: state.count + 1,
+    }));
+  }
 
   render() {
     return (
       <div className="App">
+        {this.state.count}
         {this.state.toggleShow && <TodoFeature />}
         <hr />
         <button onClick={this.handleToggle}>Toggle Show</button>
+        <button onClick={this.handleIncrease}>Increament</button>
       </div>
     );
   }
