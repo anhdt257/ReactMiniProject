@@ -1,72 +1,14 @@
-// import { PureComponent } from 'react';
 import "./App.css";
 import TodoFeature from "./features/Todo";
+import { Route } from "react-router-dom";
 import React from "react";
-// function App() {
-//   return (
-//     <div className="App">
-//       <TodoFeature/>
-//     </div>
-//   );
-// }
-
-class App extends React.Component {
-  constructor(props) {
-    // Supper để gọi hàm khởi tạo của hàm cha React.Component
-    super(props);
-    // Khai báo state
-    this.state = {
-      count: 0,
-      toggleShow: true,
-    };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleIncrease = this.handleIncrease.bind(this);
-  }
-
-  componentDidMount() {
-    console.log("component did mount");
-    // Gọi sau khi component được render lần đầu tiên
-    // Thực hiện các công việc khởi tạo, gọi API,...
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log("component did update");
-    // Gọi sau khi component được cập nhật (re-render)
-    // Kiểm tra sự thay đổi của props hoặc state trước đó và hiện tại
-    // Thực hiện các công việc cần thiết dựa trên sự thay đổi này
-  }
-
-  componentWillUnmount() {
-    console.log("component will unmount");
-    // Gọi trước khi component bị xóa khỏi DOM
-    // Hủy các tác vụ, bỏ các eventListener, interval,...
-  }
-  handleToggle() {
-    this.setState({
-      toggleShow: !this.state.toggleShow,
-    });
-  }
-  handleIncrease() {
-    this.setState((state) => ({
-      count: state.count + 1,
-    }));
-  }
-
-  render() {
-    return (
-      <div className="App">
-        {this.state.count}
-        {this.state.toggleShow && <TodoFeature />}
-        <hr />
-        <button onClick={this.handleToggle}>Toggle Show</button>
-        <button onClick={this.handleIncrease}>Increament</button>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      HomePage
+      <Route path="/todos" component={TodoFeature} />
+      Footer
+    </div>
+  );
 }
 export default App;
-
-// Có 3 giai đoạn:
-// - Mounting: componentDidMount => chạy duy nhất 1 lần khi component được constructor và render
-// - Updating: componentDidUpdate,
-// - Unmounting: componentWillUnmount
