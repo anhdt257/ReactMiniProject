@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string'
 import './style.scss'
+import { useHistory, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 
 TodoFeature.propTypes = {
     
@@ -25,26 +28,49 @@ function TodoFeature(props) {
             status:"new"
         }
     ]
+
+    const location = useLocation()
+    const history = useHistory()
+    const match = useRouteMatch()
     const [todoList,setTodoList] = useState(listTodo)
-    const [filterdList, setFilteredList] = useState(todoList)
+    const [filterdStatus, setFilteredStatus] = useState(()=>{
+        console.log(history)
+        const params = queryString.parse(location.search)
+        return params.status || 'all'
+    })
     const [newTodo,setNewTodo] = useState("")
-   
+    useEffect(()=>{
+        const params = queryString.parse(location.search)
+        setFilteredStatus(params.status || 'all')
+    },[location.search])
     const handleToggle = (todo,idx)=>{
         const newTodoList = [...todoList]
-        newTodoList[idx].status === 'new' ? newTodoList[idx].status = 'completed' : newTodoList[idx].status='new'
+        newTodoList[idx].status = newTodoList[idx].status === 'new'?'completed':'new'
         setTodoList(newTodoList)
     }
     const handleFilterAll = ()=>{
-       setFilteredList([...todoList])
+        const queryParams = {status:'all'}
+        history.push({
+            pathname:match.path,
+            search:queryString.stringify(queryParams)
+        })
     }
     const handleFilterCompleted = ()=>{
-        const newList = [...todoList]
-        setFilteredList(newList.filter(item=>item.status==='completed'))
+        const queryParams = {status:'completed'}
+        history.push({
+            pathname:match.path,
+            search:queryString.stringify(queryParams)
+        })
     }
     const handleFilterNew = ()=>{
-        const newList = [...todoList]
-        setFilteredList(newList.filter(item=>item.status==='new'))
+        const queryParams = {status:'new'}
+        history.push({
+            pathname:match.path,
+            search:queryString.stringify(queryParams)
+        })
     }
+
+    const renderTodoList = todoList.filter(todo => filterdStatus==='all'|| filterdStatus===todo.status)
     const handleAddTodo = ()=>{
         const newTodoList = [...todoList]
         const listId = newTodoList.map(item => item.id)
@@ -56,7 +82,6 @@ function TodoFeature(props) {
             }
         )
         setTodoList(newTodoList)
-        setFilteredList(newTodoList)
     }
     const handleInputChange = (e)=>{
         setNewTodo(e.target.value)
@@ -64,7 +89,6 @@ function TodoFeature(props) {
     const handleDelete = (id)=>{
         const newTodoList = [...todoList]
         setTodoList(newTodoList.filter(item=> item.id !==id))
-        setFilteredList(newTodoList.filter(item=> item.id !==id))
     }
     return (
         <div className='todoApp'>
@@ -74,7 +98,7 @@ function TodoFeature(props) {
             <button onClick={handleAddTodo}>Add</button>
             </div>
             <>
-                {filterdList.map((item,idx)=>(
+                {renderTodoList.map((item,idx)=>(
                     <TodoItem key={item.id} idx={idx} todo={item} handleToggle={handleToggle} handleDelete={handleDelete}/>
                 ))}
             </>

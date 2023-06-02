@@ -13,7 +13,6 @@ function TodoItem(props) {
             <p className={`${todo.status==="completed" ? 'disable' :""}`} onClick={()=>onToggle(todo,idx)}>
                {todo.name} 
             </p>
-               <button>Update</button>
                <button onClick={()=>onDelete(todo.id)}>Delete</button> 
         </div>
     );
